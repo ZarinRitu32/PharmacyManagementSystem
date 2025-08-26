@@ -1,5 +1,5 @@
 import { useState } from "react";
-import api from "../../api/axios";
+import api from "../../api/axios"; // Make sure this path is correct
 
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -21,9 +21,7 @@ export default function Login() {
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center font-sans">
-      <div className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md">
-
-        {/* Heading */}
+      <div className="bg-white p-6 rounded-xl shadow-xl w-full max-w-sm">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-1">
           Welcome Back
         </h2>
@@ -31,7 +29,6 @@ export default function Login() {
           Enter your email and password to access your account.
         </p>
 
-        {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <input
@@ -73,16 +70,14 @@ export default function Login() {
             Log In
           </button>
 
-          {/* Optional message */}
           {message && (
             <p className="text-center text-red-500 font-medium">{message}</p>
           )}
         </form>
 
-        {/* Register */}
         <p className="text-center text-sm text-gray-500 mt-6">
           Don’t have an account?{" "}
-          <a href="#" className="text-blue-600 font-semibold hover:underline">
+          <a href="/register" className="text-blue-600 font-semibold hover:underline">
             Register Now
           </a>
         </p>
