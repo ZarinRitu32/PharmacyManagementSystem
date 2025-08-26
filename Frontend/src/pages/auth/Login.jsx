@@ -1,8 +1,12 @@
 import { useState } from "react";
-import api from "../../api/axios"; // Make sure this path is correct
+import api from "../../api/axios";
 
 export default function Login() {
-  const [form, setForm] = useState({ email: "", password: "" });
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+    role: "admin", // default role
+  });
   const [message, setMessage] = useState("");
 
   const handleChange = (e) =>
@@ -14,6 +18,16 @@ export default function Login() {
       const res = await api.post("/login", form);
       setMessage(res.data.message);
       localStorage.setItem("user", JSON.stringify(res.data.user));
+
+      // Optional: redirect based on role
+      const role = res.data.user.role;
+      if (role === "admin") {
+        window.location.href = "/admin/dashboard";
+      } else if (role === "pharmacist") {
+        window.location.href = "/pharmacist/dashboard";
+      } else if (role === "donor") {
+        window.location.href = "/donor/dashboard";
+      }
     } catch (err) {
       setMessage(err.response?.data?.message || "Login failed");
     }
@@ -26,10 +40,24 @@ export default function Login() {
           Welcome Back
         </h2>
         <p className="text-sm text-gray-500 text-center mb-6">
-          Enter your email and password to access your account.
+          Enter your credentials to access your account.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Role Selection */}
+          <div>
+            <select
+              name="role"
+              value={form.role}
+              onChange={handleChange}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="admin">Admin</option>
+              <option value="pharmacist">Pharmacist</option>
+              <option value="donor">Donor</option>
+            </select>
+          </div>
+
           <div>
             <input
               type="email"
@@ -41,6 +69,7 @@ export default function Login() {
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
+
           <div>
             <input
               type="password"
@@ -77,7 +106,10 @@ export default function Login() {
 
         <p className="text-center text-sm text-gray-500 mt-6">
           Don’t have an account?{" "}
-          <a href="/register" className="text-blue-600 font-semibold hover:underline">
+          <a
+            href="/register"
+            className="text-blue-600 font-semibold hover:underline"
+          >
             Register Now
           </a>
         </p>

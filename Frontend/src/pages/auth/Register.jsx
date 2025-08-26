@@ -7,6 +7,7 @@ export default function Register() {
     email: "",
     password: "",
     confirmPassword: "",
+    role: "donor", // Default role
   });
 
   const [message, setMessage] = useState("");
@@ -28,7 +29,9 @@ export default function Register() {
         name: form.name,
         email: form.email,
         password: form.password,
+        role: form.role,
       });
+
       setMessage(res.data.message || "Registered successfully!");
     } catch (err) {
       setMessage(err.response?.data?.message || "Registration failed");
@@ -46,6 +49,20 @@ export default function Register() {
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Role Selection */}
+          <div>
+            <select
+              name="role"
+              value={form.role}
+              onChange={handleChange}
+              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="admin">Admin</option>
+              <option value="pharmacist">Pharmacist</option>
+              <option value="donor">Donor</option>
+            </select>
+          </div>
+
           <div>
             <input
               type="text"
@@ -57,6 +74,7 @@ export default function Register() {
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
+
           <div>
             <input
               type="email"
@@ -68,6 +86,7 @@ export default function Register() {
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
+
           <div>
             <input
               type="password"
@@ -79,6 +98,7 @@ export default function Register() {
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
+
           <div>
             <input
               type="password"
@@ -113,3 +133,4 @@ export default function Register() {
     </div>
   );
 }
+
