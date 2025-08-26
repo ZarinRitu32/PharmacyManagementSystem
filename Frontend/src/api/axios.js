@@ -1,7 +1,8 @@
 import axios from "axios";
 
-const API = axios.create({
-  baseURL: "http://localhost:8000/api",
+const api = axios.create({
+  baseURL: "http://localhost:5000", // Node.js server URL
+  headers: { "Content-Type": "application/json" },
 });
 
-export default API;
+export default api;
