@@ -1,0 +1,1 @@
+create database pharmacy_management;
