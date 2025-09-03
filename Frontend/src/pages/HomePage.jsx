@@ -1,23 +1,35 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-const medicines = [
-  { name: "Paracetamol", category: "OTC" },
-  { name: "Amoxicillin", category: "Prescription" },
-  { name: "Vitamin C", category: "Supplements" },
-  { name: "Ibuprofen", category: "OTC" },
+const categories = [
+  "All",
+  "Diabetes",
+  "Fever",
+  "Cold",
+  "Pregnancy",
+  "Baby Foods",
 ];
-
-const categories = ["All", "OTC", "Prescription", "Supplements"];
 
 const HomePage = () => {
   const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [medicines, setMedicines] = useState([]);
 
-  const filteredMedicines =
-    selectedCategory === "All"
-      ? medicines
-      : medicines.filter((med) => med.category === selectedCategory);
+  const fetchMedicines = async () => {
+    try {
+      const res = await axios.get("http://localhost:5000/medicines", {
+        params: { category: selectedCategory },
+      });
+      setMedicines(res.data);
+    } catch (err) {
+      console.error("Error fetching medicines:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchMedicines();
+  }, [selectedCategory]);
 
   return (
     <div className="font-sans text-gray-800">
@@ -63,13 +75,18 @@ const HomePage = () => {
       {/* Medicines Grid */}
       <section className="py-8">
         <div className="container mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {filteredMedicines.map((med, idx) => (
+          {medicines.map((med, idx) => (
             <div
               key={idx}
               className="bg-white p-4 shadow-lg rounded-lg text-center"
             >
               <h3 className="text-lg font-semibold">{med.name}</h3>
               <p className="text-sm text-gray-500">{med.category}</p>
+              <p className="text-sm text-gray-600">Brand: {med.brand}</p>
+              <p className="text-sm text-gray-600">Price: {med.price}৳</p>
+              <p className="text-sm text-red-500">
+                Stock: {med.stock_quantity}
+              </p>
             </div>
           ))}
         </div>

@@ -5,7 +5,7 @@ import { createUser, findUserByEmail } from "../models/user.js";
 import bcrypt from "bcryptjs";
 dotenv.config();
 
-/*const router = express.Router();
+const router = express.Router();
 
 // Register
 router.post("/register", (req, res) => {
@@ -51,11 +51,11 @@ router.post("/login", (req, res) => {
 });
 
 export default router;
-*/
+
 // D:\PharmacyManagementSystem\Backend\routes\authController.js
 
 // Generate JWT
-const generateToken = (user) => {
+/*const generateToken = (user) => {
   return jwt.sign(
     { id: user.id, email: user.email, role: user.role },
     process.env.JWT_SECRET,
@@ -109,3 +109,5 @@ export const login = (req, res) => {
     res.json({ token });
   });
 };
+export default router;
+*/

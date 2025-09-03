@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import db from "../db.js";
 
-/*export const register = (req, res) => {
+export const register = (req, res) => {
   const { name, email, password, role } = req.body;
 
   db.query(
@@ -52,9 +52,10 @@ export const login = (req, res) => {
     }
   );
 };
-*/
+//export default router;
+
 // REGISTER
-router.post("/register", async (req, res) => {
+/*router.post("/register", async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
 
@@ -81,4 +82,4 @@ router.post("/register", async (req, res) => {
   }
 });
 
-export default router;
+export default router;*/
